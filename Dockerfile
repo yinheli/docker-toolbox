@@ -78,7 +78,7 @@ RUN rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && \
 ### other ###
 
 # set env
-ENV PATH $PATH:\$JAVA_HOME/bin:\$GOROOT/bin
+ENV PATH $PATH:$JAVA_HOME/bin:$GOROOT/bin
 
 
 CMD ["/usr/bin/supervisord"]
