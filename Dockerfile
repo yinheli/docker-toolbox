@@ -44,7 +44,7 @@ ENV GOPATH /data/gopath
 ### install java ###
 
 # download && install java
-RUN wget --progress=bar --no-check-certificate \
+RUN wget --no-check-certificate \
     -O /tmp/jdk.tar.gz \
     --header "Cookie: oraclelicense=a" \
     http://download.oracle.com/otn-pub/java/jdk/7u72-b14/server-jre-7u72-linux-x64.tar.gz && \
