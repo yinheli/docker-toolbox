@@ -68,8 +68,8 @@ ENV NODE_ENV production
 # Install nvm with node and npm
 RUN rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && \
     cd ~/.nvm && git checkout `git describe --abbrev=0 --tags` && \
-    source ~/.nvm/nvm.sh && \
     echo 'source ~/.nvm/nvm.sh' >> ~/.bash_profile && \
+    source ~/.bash_profile && \
     nvm install $NODE_VERSION && \
     nvm alias default $NODE_VERSION && \
     npm install -g cnpm --registry=https://registry.npm.taobao.org
