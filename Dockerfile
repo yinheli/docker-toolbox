@@ -11,19 +11,13 @@ RUN rm /bin/sh && ln -s /bin/bash /bin/sh && \
     apt-get update && apt-get install -y \
     curl vim iptables ufw telnet wget tar unzip make gcc git libc6-dev \
     mysql-server \
-    openssh-server supervisor && \
+    supervisor && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     rm -rf /var/lib/mysql/mysql
 
 
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config && \
-    sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config && \
-    sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
-    sed -i 's/session\s*required\s*pam_loginuid.so/session optional pam_loginuid.so/g' /etc/pam.d/sshd && \
-    mkdir /var/run/sshd && \
-    /bin/echo 'root:henry!123qwe'|chpasswd && \
     locale-gen en_US.UTF-8 && update-locale en_US.UTF-8
 
 
@@ -56,8 +50,6 @@ RUN wget --no-check-certificate \
 
 ENV JAVA_HOME /usr/local/jdk
 
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
 
 ### install node.js ###
 
@@ -80,5 +72,7 @@ RUN rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && \
 # set env
 ENV PATH $PATH:$JAVA_HOME/bin:$GOROOT/bin
 
+COPY start.sh /bin/start.sh
+RUN chmod +x /bin/start.sh
 
-CMD ["/usr/bin/supervisord"]
+CMD ["/bin/start.sh"]
